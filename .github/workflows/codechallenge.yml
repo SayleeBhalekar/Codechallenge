@@ -1,6 +1,22 @@
 # This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
+# When a commit is pushed to the main branch
+# Use anothrNick/github-tag-action to determine what the next tag version will be (but should not
+# create the tag at this point).   • Store the version as an output for later use
+# Using Maven, build and publish your application to GitHub packages
+# The version of the published package should match the previously stored version
+# Hint: Maven provides a way to update the version from the command line
+# Use elgohr/Github-Release-Action to create a GitHub release
+# The release message should match the previously stored version
+# Workforce Strategy  –  DevOps Challenge
+# Summary  –  3
+# Hint: Create a new personal access token that has the appropriate entitlements to create
+# releases and store this in a secret that can be referenced by the action
+# Use anothrNick/github-tag-action to create a tag
+# If a commit is pushed to any other branch
+# A workflow should not be executed
+
 name: Code Challange
 
 on:
@@ -31,6 +47,7 @@ jobs:
         cache: maven
     - name: Build with Maven
       run:
+      # mvn --batch-mode release:update-versions -DevelopmentVersion=${{steps.step1.outputs.tag}}-SNAPSHOT
        mvn -B package --file pom.xml
     outputs:    
         output1: ${{steps.step1.outputs.tag}}
